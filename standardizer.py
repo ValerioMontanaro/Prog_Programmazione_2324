@@ -9,9 +9,10 @@ class Standardizer:
     #ogni valore viene prima sottratto della media e poi diviso per la deviazione standard
     def standardize(self, df):
         for col in df.columns:
-            if np.issubdtype(df[col].dtype, np.number):
+            if np.issubdtype(df[col].dtype, np.number) and col != 'Sample code number': #la standardizzazione dei codici identificativi del tumore non ha senso e quindi non deve esssere effetuata
                 mean_value = df[col].mean()
                 std_value = df[col].std()
                 df[col] = (df[col] - mean_value) / std_value
 
         return df
+

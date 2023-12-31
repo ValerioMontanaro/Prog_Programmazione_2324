@@ -1,6 +1,7 @@
 from validation import Validation
 import numpy as np
 
+
 # Questa è la classe concreta che estende la classe astratta Validation
 # e implementa il metodo validate per la validazione del dataset mediante holdout
 
@@ -35,14 +36,18 @@ class Holdout(Validation):
     # -df: il DataFrame che deve essere diviso in set di training e testing.
     # -random_state: un valore opzionale per inizializzare il generatore di numeri casuali, utile per ottenere risultati riproducibili. Di default è None, il che significa che non c'è una inizializzazione deterministica.
     # output:
-    # -una tupla contenente il set di training e il set di test.
+    # -folds: una lista contenente una tupla, che contiene il set di training e il set di test.
     def split(self, df, random_state=None):
+        folds = []
+
         if random_state is not None:
             np.random.seed(random_state)  # inizializzazione del generatore di numeri casuali
 
         shuffled_indices = np.random.permutation(len(df))  # permutazione casuale degli indici del DataFrame
-        test_set_size = int(len(df) * self.test_size)  # arrotondamento all'intero più vicino della dimensione del test set
+        test_set_size = int(
+            len(df) * self.test_size)  # arrotondamento all'intero più vicino della dimensione del test set
         test_indices = shuffled_indices[:test_set_size]  # selezione degli indici del test set
         train_indices = shuffled_indices[test_set_size:]  # selezione degli indici del training set
 
-        return df.iloc[train_indices], df.iloc[test_indices]  # restituzione tupla dei 2 dataframe: training set e test set
+        folds.append((df.iloc[train_indices], df.iloc[test_indices]))
+        return folds

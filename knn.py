@@ -10,6 +10,22 @@ class KNN:
         self.k = k
 
     def train(self, df_train: pd.DataFrame) -> (np.ndarray, np.ndarray, int):
+        # prima di tutto è importante salvare gli id delle righe per risalire ai valori delle features durante i test
+        # con reset_index() aggiugno una colonna alla fine con gli identificatori delle righe del dataframe
+        df_train['row_id'] = df_train.reset_index().index
+
+        # ora però l'ultima colonna è il row_id quando in realtà per coerenza dovrebbe essere la colonna target, ovvero
+        # i valori y da stimare in fase di test
+        # per questo motivo sposto la colonna target in ultima posizione
+        cols = list(df_train.columns)
+        # in questo modo sposto la colonna target in ultima posizione
+        # cols[:-2] arriva a prendere tutte le colonne tranne le ultime due
+        # cols[-1] prende l'ultima colonna che sarà il row_id
+        # cols[-2] prende la penultima colonna che sarà la colonna target
+        # riassemblo le colonne in questo modo e riscrivo il dataframe
+        cols = cols[:-2] + [cols[-1]] + [cols[-2]]
+        df_train = df_train[cols]
+
         # in quest modo memorizzo in X_train sotto forma di numpy array i valori del dataframe df_train
         X_train = df_train.iloc[:, :-1].values
 

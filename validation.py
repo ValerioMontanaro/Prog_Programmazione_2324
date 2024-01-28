@@ -8,5 +8,5 @@ class Validation(ABC):
 
     # Questo metodo astratto deve essere implementato dalle classi concrete per i diversi metodi di split
     @abstractmethod
-    def split(self, df, random_state=None):
+    def split(self, df):
         pass

@@ -14,8 +14,10 @@ df_test = pd.DataFrame(data)
 print(df_test)
 
 # Utilizzo del metodo di split istanziato dal factory in base alla scelta dell'utente
-factory = SplitterFactory()
-splitter = factory.create_splitter()
+method_input = input(
+    "Inserisci il metodo di split desiderato.\nScegli tra 'holdout' e 'stratified cross validation': ").strip().lower()
+splitter = SplitterFactory.create_splitter(method_input)
+
 folds = splitter.split(df_test, random_state=42)
 
 print(type(folds))
@@ -35,7 +37,7 @@ for i, (train, test) in enumerate(folds):
 df_test_train = df_test.iloc[train_indices]
 df_test_test = df_test.iloc[test_indices]
 
-classifier = KNN(k=1)
+classifier = KNN(k=5)
 X_train, X_train_id_y, y_train, k = classifier.train(df_test_train)
 exit_df = classifier.test(df_test_test, X_train, X_train_id_y, y_train, k)
 

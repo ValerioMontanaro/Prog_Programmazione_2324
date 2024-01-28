@@ -5,21 +5,15 @@ from stratifiedCrossValidation import StratifiedCrossValidation
 
 
 class SplitterFactory:
-    def __init__(self):
-        # Chiedere all'utente il metodo di split
-        method_input = input(
-            "Inserisci il metodo di split desiderato.\nScegli tra 'holdout' e 'stratified cross validation': ").strip().lower()
-
+    # Questo metodo astratto analizza il nome del metodo di split scelto dall'utente e in base a questo crea l'oggetto splitter corretto
+    # output: -un'istanza della classe astratta Validation
+    @staticmethod
+    def create_splitter(method):
         # Verifica che il metodo sia uno dei metodi supportati
-        if method_input not in ["holdout", "stratified cross validation"]:
+        if method not in ["holdout", "stratified cross validation"]:
             raise ValueError("Metodo non supportato. Scegli tra 'holdout' e 'stratified cross validation'")
 
-        self.method = method_input
-
-    # Questo metodo analizza il nome del metodo di split scelto dall'utente e in base a questo crea l'oggetto splitter corretto
-    # output: -un'istanza della classe astratta Validation
-    def create_splitter(self):
-        if self.method == "holdout":
+        if method == "holdout":
             return Holdout()
-        elif self.method == "stratified cross validation":
+        elif method == "stratified cross validation":
             return StratifiedCrossValidation()

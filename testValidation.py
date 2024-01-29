@@ -3,17 +3,19 @@ import numpy as np
 import pandas as pd
 from knn import KNN
 from splitterFactory import SplitterFactory
+from reader import Reader
+from filler import Filler
+from standardizer import Standardizer
+from partitioner import Partitioner
+from readerFactory import ReaderFactory
 
-# Creazione di un DataFrame di esempio
-# la colonna sample number è l'identificatore della riga e non è una feature sarebbe il sample number del tumore, questa
-# colonna è per scopi di test
-data = {
-    'sample number': [123, 321, 121, 131, 313, 333, 111, 133, 312, 122],
-    'feature1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    'feature2': [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
-    'class': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
-}
-df_test = pd.DataFrame(data)
+factory = ReaderFactory()
+reader = factory.createReader("breast_cancer.csv")
+df = reader.parse("breast_cancer.csv")
+filler = Filler()
+df = filler.fill(df)
+standardizer = Standardizer()
+df_test = standardizer.standardize(df)
 
 print(df_test)
 

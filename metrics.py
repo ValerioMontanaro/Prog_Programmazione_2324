@@ -7,13 +7,13 @@ import numpy as np
 
 class Metrics:
 
-    # Il costruttore riceve in input due dataframe da due colonne ciascuno: "true_labels_df" e "predictions_df"
+    # Il metodo "get_metrics" riceve in input due dataframe da due colonne ciascuno: "true_labels_df" e "predictions_df"
     # - Il primo df contiene gli id identificativi dei tumori e la loro classe reale (benigno o maligno)
     # - Il secondo df contiene gli id identificativi dei tumori e la loro classe predetta (benigno o maligno)
     # Il metodo inizializza :
     # - Un nuovo dataframe "data" (una variabile di classe) che contiene gli id identificativi dei tumori, la loro classe reale e la loro classe predetta
     # - Un nuovo dataframe "conf_matrix" (una variabile di classe) che contiene la matrice di confusione
-    def __init__(self, true_labels_df, predictions_df):
+    def get_metrics(self, true_labels_df, predictions_df):
         # Unisci i DataFrame sulla base dell'ID del tumore
         self.data = pd.merge(true_labels_df, predictions_df, on='Sample code number')
         self.true_labels = self.data.iloc[:, 1]
@@ -69,9 +69,10 @@ if __name__ == "__main__":
         'Predicted Label': np.random.choice([2, 4], 10)  # Previsioni casuali (2 per benigno, 4 per maligno)
     })
 
-    metrics = Metrics(true_labels_df_test, predictions_df_test)
+    metrics = Metrics()
 
     # Ottenere le varie metriche
+    metrics.get_metrics(true_labels_df_test, predictions_df_test)
     accuracy = metrics.accuracy()
     error_rate = metrics.error_rate()
     sensitivity = metrics.sensitivity()

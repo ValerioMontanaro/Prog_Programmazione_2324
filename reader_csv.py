@@ -8,5 +8,5 @@ class ReaderCSV(Reader):
     # leggere il relativo commento per ulteriori informazioni sul metodo astratto "parse"
     # con la seguente implementazione concreta si definisce l'estensione "csv" del file di input
     def parse(self, filename):
-        df=pd.read_csv(filename)
+        df = pd.read_csv(filename, index_col="Sample code number")
         return df

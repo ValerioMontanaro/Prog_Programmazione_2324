@@ -41,8 +41,8 @@ class StratifiedCrossValidation(Validation):
 
         # Creazione dei set di training e test per ciascun fold
         for i in range(n_folds):
-            test_set = df[df["fold"] == i]
-            train_set = df[df["fold"] != i]
+            test_set = df[df["fold"] == i].iloc[:, :-1]  # Rimuove l'ultima colonna dal test set
+            train_set = df[df["fold"] != i].iloc[:, :-1]  # Rimuove l'ultima colonna dal train set
             folds.append((train_set, test_set))
 
         return folds

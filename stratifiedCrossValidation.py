@@ -11,7 +11,6 @@ class StratifiedCrossValidation(Validation):
     # Questo metodo implementa la validazione del dataset mediante stratified cross validation
     # input:
     # -df: il DataFrame che deve essere diviso in set di training e testing.
-    # -random_state: un valore opzionale per inizializzare il generatore di numeri casuali, utile per ottenere risultati riproducibili. Di default è None, il che significa che non c'è una inizializzazione deterministica.
     # -n_folds: il numero di folds. Di default è 5.
     # output:
     # -folds: una lista contenente le n_folds tuple, ognuna delle quali contiene il set di training e il set di test.
@@ -26,10 +25,10 @@ class StratifiedCrossValidation(Validation):
         for label in df["Class"].unique():  # Per ogni classe
             class_indices = df[df["Class"] == label].index.tolist()  # Lista degli indici delle righe della classe
 
-            # Divisione equilibrata degli indici per la classe tra i folds
+            # Divisione equilibrata degli indici per la classe tra i folds (se possibile)
             fold_sizes = [len(class_indices) // n_folds for _ in
                           range(n_folds)]  # Calcolo dimensione di ogni fold
-            for i in range(len(class_indices) % n_folds):
+            for i in range(len(class_indices) % n_folds):  # Per ogni elemento rimasto
                 fold_sizes[i] += 1  # Aggiunta degli elementi rimasti in più ai primi fold
 
             # Assegnazione degli indici ai folds

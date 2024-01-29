@@ -1,10 +1,14 @@
 # Funzione: test delle classi concrete di validation
+import numpy as np
 import pandas as pd
 from knn import KNN
 from splitterFactory import SplitterFactory
 
 # Creazione di un DataFrame di esempio
+# la colonna sample number è l'identificatore della riga e non è una feature sarebbe il sample number del tumore, questa
+# colonna è per scopi di test
 data = {
+    'sample number': [123, 321, 121, 131, 313, 333, 111, 133, 312, 122],
     'feature1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     'feature2': [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
     'class': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
@@ -60,30 +64,22 @@ elif method_input == "stratified cross validation":
 
     folds = splitter.split(df_test, n_folds=n_folds)
 
-# Stampa dei risultati
-
-print(type(folds))
 print(folds)
+print(len(folds))
 
-train_indices = None
-test_indices = None
+# a prescindere dal metodo di split scelto, folds è una LISTA che contiene TUPLE di 2 DATAFRAME (train e test)
+# se il metodo è holdout avrò un solo 'folds' che conterrà una tupla di 2 dataframe (train e test)
+# se il metodo è stratified cross validation avrò tanti 'folds' quanti sono i folds e ogni 'folds' conterrà una tupla di
+# 2 dataframe (train e test)
+for i in range(len(folds)):
+    df_test_train = folds[i][0]
+    df_test_test = folds[i][1]
 
-# Stampa dei risultati
-for i, (train, test) in enumerate(folds):
-    print(f"Fold {i+1}:")
-    train_indices = train.index.tolist()
-    test_indices = test.index.tolist()
-    print("Train indices:", train.index.tolist())
-    print("Test indices:", test.index.tolist())
+    print(df_test_train)
+    print(df_test_test)
 
-    print("Train set:", train.shape)
-    print("Test set:", test.shape)
+    classifier = KNN(k=5)
+    X_train, X_train_id_y, y_train, k = classifier.train(df_test_train)
+    exit_df = classifier.test(df_test_test, X_train, X_train_id_y, y_train, k)
 
-df_test_train = df_test.iloc[train_indices]
-df_test_test = df_test.iloc[test_indices]
-
-classifier = KNN(k=5)
-X_train, X_train_id_y, y_train, k = classifier.train(df_test_train)
-exit_df = classifier.test(df_test_test, X_train, X_train_id_y, y_train, k)
-
-print(exit_df)
+    print(exit_df)

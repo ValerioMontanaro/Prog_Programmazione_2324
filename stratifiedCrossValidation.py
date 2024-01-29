@@ -23,8 +23,8 @@ class StratifiedCrossValidation(Validation):
         folds = []
 
         # Per ogni classe, assegno a ogni riga della classe un fold in modo equilibrato
-        for label in df["class"].unique():  # Per ogni classe
-            class_indices = df[df["class"] == label].index.tolist()  # Lista degli indici delle righe della classe
+        for label in df["Class"].unique():  # Per ogni classe
+            class_indices = df[df["Class"] == label].index.tolist()  # Lista degli indici delle righe della classe
 
             # Divisione equilibrata degli indici per la classe tra i folds
             fold_sizes = [len(class_indices) // n_folds for _ in

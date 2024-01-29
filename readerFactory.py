@@ -1,7 +1,7 @@
 from reader_csv import ReaderCSV
 
 #la classe "Factory" ha il compito di istanziare la giusta classe in base al tipo di file di input
-class Factory:
+class ReaderFactory:
 
     #Il metodo "createReader" riceve in input il nome del file da leggere e in base all'estensione del file crea l'oggetto reader corretto
     def createReader(self, filename):

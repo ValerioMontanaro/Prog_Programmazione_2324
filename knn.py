@@ -49,13 +49,13 @@ class KNN:
         :return df_test_adj: dataframe con 2 colonne; Prima --> Sample ID Number,  Seconda --> Classe Reale
         """
 
-        # metto nel df_train la colonna del sample number id
-        df_test.reset_index(inplace=True)
-
         # exit_df avrà come numero di colonne le colonne del dataframe di test meno la colonna target ma più una colonna
         # che conterrà l'id del punto di test che sto considerando e più un'altra che conterrà la classe predetta
         df_predict = None
-        df_test_adj = df_test.iloc[:, [0, -1]]
+        df_test_adj = df_test.iloc[:, [-1]]
+
+        # metto nel df_train la colonna del sample number id
+        df_test.reset_index(inplace=True)
 
         # in questo modo memorizzo in X_test sotto forma di numpy array i valori del dataframe df_test.
         # gli tolgo l'ultima colonna perchè è la colonna target e la prima colonna perchè è il sample number id
@@ -100,19 +100,33 @@ class KNN:
             # ora devo aggiungere la riga a exit_df
             # la riga è composta row che in ogni iterazione è il punto di X_test che sto considerando e most_frequent
             # che è la classe predetta dal modello di classificazione
-            rtba = np.concatenate((row, [most_frequent]))
-            # NB a vstack devo passare una tupla perchè prende un positional argument
-            df_predict = np.vstack((df_predict, rtba)) if df_predict is not None else np.array(rtba)
+            rtba = np.concatenate((row, [int(most_frequent)]))
 
-        # trasformo l'array in un dataframe
-        df_predict = pd.DataFrame(df_predict)
-        # aggiungo all'inizio la colonna del sample number id
-        first = df_test.iloc[:, 0]
-        df_predict.insert(0, 'Sample ID Number', first)
-        df_predict = df_predict.iloc[:, [0, -1]]
+            # Creare un DataFrame da rtba
+            new_row = pd.DataFrame([rtba])
 
-        df_predict.columns = ['Sample ID Number', 'Prediction']
-        df_test_adj.columns = ['Sample ID Number', 'Real Class']
+            # Controlla se df_predict esiste e non è vuoto
+            if df_predict is not None:
+                # Se df_predict esiste, concatenalo con new_row
+                df_predict = pd.concat([df_predict, new_row], ignore_index=True)
+            else:
+                # Altrimenti, inizializza df_predict con new_row
+                df_predict = new_row
+
+        # Estrai la colonna 'Sample ID Number' da df_test
+        sample_id_number = df_test.iloc[:, 0]
+
+        # Assicurati che df_predict abbia lo stesso numero di righe di sample_id_number
+        if len(sample_id_number) == len(df_predict):
+            # Imposta sample_id_number come indice di df_predict
+            df_predict = df_predict.set_index(sample_id_number)
+        else:
+            print("Errore: Il numero di righe in df_test e df_predict non corrisponde.")
+
+        df_predict = df_predict.iloc[:, [-1]]
+
+        df_predict.columns = ['Prediction']
+        df_test_adj.columns = ['Real Class']
 
         # NBB nello stratified cross validation avrò tanti dataframe in uscita quanti fold ho fatto (*2 perchè ho
         # sia il dataframe con le classi reali che quello con le classi predette)

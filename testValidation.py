@@ -87,3 +87,17 @@ for i in range(len(folds)):
     print(f"Dataframe predizione n.{i}: \n {df_predict}")
     print(f"Dataframe adj n.{i}: \n {df_test_adj}")
 
+    # Estrai l'ultima colonna da entrambi i DataFrame
+    last_column_df_predict = df_predict.iloc[:, -1]
+    last_column_df_test_adj = df_test_adj.iloc[:, -1]
+
+    # Confronta le colonne
+    differences = last_column_df_predict != last_column_df_test_adj
+
+    # Estrai le righe dove ci sono differenze
+    different_rows = df_predict[differences]
+
+    # Visualizza le differenze
+    print("Righe con predizioni differenti:")
+    print(different_rows)
+

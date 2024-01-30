@@ -77,12 +77,13 @@ for i in range(len(folds)):
     df_test_train = folds[i][0]
     df_test_test = folds[i][1]
 
-    print(f"Dataframe di train n.{i}: {df_test_train}")
-    print(f"Dataframe di test n.{i}: {df_test_test}")
+    print(f"Dataframe di train n.{i}: \n {df_test_train}")
+    print(f"Dataframe di test n.{i}: \n {df_test_test}")
 
     classifier = KNN(k=5)
-    X_train, X_train_id_y, y_train = classifier.train(df_test_train)
-    df_predict, df_test_adj = classifier.test(df_test_test, X_train, X_train_id_y, y_train)
+    X_train, X_train_y, y_train = classifier.train(df_test_train)
+    df_predict, df_test_adj = classifier.test(df_test_test, X_train, X_train_y, y_train)
 
-    print(f"Dataframe predizione n.{i}: {df_predict}")
-    print(f"Dataframe adj n.{i}: {df_test_adj}")
+    print(f"Dataframe predizione n.{i}: \n {df_predict}")
+    print(f"Dataframe adj n.{i}: \n {df_test_adj}")
+

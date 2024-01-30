@@ -16,20 +16,24 @@ class KNN:
         in uscita ho diversi numpy array:
         :param df_train: è il dataframe di train
         :return X_train: che contiene i valori del dataframe di train senza la colonna target
-        :return X_train_y: che contiene i valori del dataframe di train compresa la colonna target
+        :return X_train_y: che contiene i valori del dataframe di train compresa la colonna target e il sample number id
         :return y_train: che contiene i valori della colonna target del dataframe di train
         """
 
-        # in quest pezzo di codice memorizzo in X_train sotto forma di numpy array
-        # gli tolgo l'ultima colonna perchè è la colonna target
-        X_train = df_train.iloc[:, :-1].values
+        # metto nel df_train la colonna del sample number id
+        df_train.reset_index(inplace=True)
 
-        # NB la prima colonna sarà il sample number che dovrà essere 'ignorato' nel momento in cui si calcola la
-        # calcola distanza euclidea tra i punti di train e i punti di test
-        X_train_y = df_train.values  # prendo tutto il dataframe df_train
+        # in quest pezzo di codice memorizzo in X_train sotto forma di numpy array
+        # gli tolgo l'ultima colonna perchè è la colonna target e la prima colonna perchè è il sample number id
+        X_train = df_train.iloc[:, 1:-1].values
+
+        # in X_train_y invece memorizzo l'intero dataframe comprendendo anche la colonna target e il sample number id
+        X_train_y = df_train.values
 
         # in y_train memorizzo in un numpy array i valori della colonna target del dataframe df_train
         y_train = df_train.iloc[:, -1].values
+        print(X_train.shape)
+
         return X_train, X_train_y, y_train
 
     def test(self, df_test: pd.DataFrame, X_train: np.ndarray, X_train_y: np.ndarray, y_train: np.ndarray):
@@ -39,11 +43,14 @@ class KNN:
         punto di train.
         :param df_test: dataframe di test
         :param X_train: che contiene i valori del dataframe di train senza la colonna target
-        :param X_train_y: che contiene i valori del dataframe di train compresa la colonna target
+        :param X_train_y: che contiene i valori del dataframe di train compresa la colonna target e il sample number id
         :param y_train: che contiene i valori della colonna target del dataframe di train
         :return df_predict: dataframe con 2 colonne; Prima --> Sample ID Number,  Seconda --> Classe Predetta
         :return df_test_adj: dataframe con 2 colonne; Prima --> Sample ID Number,  Seconda --> Classe Reale
         """
+
+        # metto nel df_train la colonna del sample number id
+        df_test.reset_index(inplace=True)
 
         # exit_df avrà come numero di colonne le colonne del dataframe di test meno la colonna target ma più una colonna
         # che conterrà l'id del punto di test che sto considerando e più un'altra che conterrà la classe predetta
@@ -51,24 +58,23 @@ class KNN:
         df_test_adj = df_test.iloc[:, [0, -1]]
 
         # in questo modo memorizzo in X_test sotto forma di numpy array i valori del dataframe df_test.
-        # gli tolgo l'ultima colonna perchè è la colonna target
-        X_test = df_test.iloc[:, :-1].values
-
-        # METTI COME INDICE DELLE COLONNE DEL DATAFRAME DI TEST LA COLONNA SAMPLE NUMBER
+        # gli tolgo l'ultima colonna perchè è la colonna target e la prima colonna perchè è il sample number id
+        X_test = df_test.iloc[:, 1:-1].values
+        print(X_test.shape)
 
         # per far si che il calcolo sia coerente il numero di colonne dei due numpy array deve essere uguale
         if X_train.shape[1] != X_test.shape[1]:
             raise ValueError("Il numero di colonne di X_train e X_test deve essere uguale")
 
         # calcolo ora la distanza tra ogni punto che sta in X_test e ogni punto che sta in x_train iterativamente per
-        # ogni punto singolamrnte di X_test.
+        # ogni punto singolarmente di X_test.
         # in questo modo dist sarà un array con tante colonne quanti punti in X_train e una riga
         for row in X_test:
-            dist = np.linalg.norm(X_train[:, 1:] - row[1:], axis=1)  # axis=1 dice che l'operazione di norma è per
-            # ogni RIGA
+            dist = np.linalg.norm(X_train - row, axis=1)  # axis=1 dice che l'operazione di norma è per ogni RIGA
             # voglio aggingere una riga a dist che contiene i valori della colonna target corrispondente alla riga di
             # X_train che sta in dist
             dist = np.vstack((dist, y_train))
+
             # ora dist ha 2 righe e tante colonne quanti punti (ovvero righe) in X_train
 
             # voglio aggiungere un'altra riga a dist che contiene i valori dell'id corrispondente alla riga di X_train
@@ -100,11 +106,13 @@ class KNN:
 
         # trasformo l'array in un dataframe
         df_predict = pd.DataFrame(df_predict)
+        # aggiungo all'inizio la colonna del sample number id
+        first = df_test.iloc[:, 0]
+        df_predict.insert(0, 'Sample ID Number', first)
         df_predict = df_predict.iloc[:, [0, -1]]
 
-        # servono 2 dataframe in uscita:
-        # 1) dataframe con 2 colonne, Prima --> Sample ID Number Seconda --> Classe Reale
-        # 2) dataframe con 2 colonne, Prima --> Sample ID Number Seconda --> Classe Predetta
+        df_predict.columns = ['Sample ID Number', 'Prediction']
+        df_test_adj.columns = ['Sample ID Number', 'Real Class']
 
         # NBB nello stratified cross validation avrò tanti dataframe in uscita quanti fold ho fatto (*2 perchè ho
         # sia il dataframe con le classi reali che quello con le classi predette)

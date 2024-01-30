@@ -8,16 +8,16 @@ import numpy as np
 class Metrics:
 
     # Il metodo "get_metrics" riceve in input due dataframe da due colonne ciascuno: "true_labels_df" e "predictions_df"
-    # - Il primo df contiene gli id identificativi dei tumori e la loro classe reale (benigno o maligno)
-    # - Il secondo df contiene gli id identificativi dei tumori e la loro classe predetta (benigno o maligno)
+    # - Il primo df contiene gli id identificativi dei tumori (come indice) e la loro classe reale  (come series)
+    # - Il secondo df contiene gli id identificativi dei tumori (come indice) e la loro classe predetta (benigno o maligno)
     # Il metodo inizializza :
-    # - Un nuovo dataframe "data" (una variabile di classe) che contiene gli id identificativi dei tumori, la loro classe reale e la loro classe predetta
+    # - Un nuovo dataframe "data" (una variabile di classe) che contiene gli id identificativi dei tumori (come indice), la loro classe reale e la loro classe predetta (come series)
     # - Un nuovo dataframe "conf_matrix" (una variabile di classe) che contiene la matrice di confusione
     def get_metrics(self, true_labels_df, predictions_df):
         # Unisci i DataFrame sulla base dell'ID del tumore
-        self.data = pd.merge(true_labels_df, predictions_df, on='Sample code number')
-        self.true_labels = self.data.iloc[:, 1]
-        self.predicted_labels = self.data.iloc[:, 2]
+        self.data = pd.merge(true_labels_df, predictions_df, left_index=True, right_index=True)
+        self.true_labels = self.data.iloc[:, 0]  # Selezione della prima colonna
+        self.predicted_labels = self.data.iloc[:, 1]  # Selezione della seconda colonna
         self.conf_matrix = self._confusion_matrix()
 
     # Il metodo restituisce la matrice di confusione
@@ -59,13 +59,11 @@ if __name__ == "__main__":
 
     # DataFrame con etichette reali
     true_labels_df_test = pd.DataFrame({
-        'Sample code number': np.arange(1, 11),  # ID identificativi da 1 a 10
         'Real Label': np.random.choice([2, 4], 10)  # Etichette reali casuali (2 per benigno, 4 per maligno)
     })
 
     # DataFrame con previsioni
     predictions_df_test = pd.DataFrame({
-        'Sample code number': np.arange(1, 11),  # ID identificativi da 1 a 10
         'Predicted Label': np.random.choice([2, 4], 10)  # Previsioni casuali (2 per benigno, 4 per maligno)
     })
 
@@ -83,6 +81,7 @@ if __name__ == "__main__":
     print(true_labels_df_test)
     print(predictions_df_test)
 
+
     # Stampare i risultati
     print(f"Confusion Matrix: {metrics.conf_matrix}")
 
@@ -93,3 +92,5 @@ if __name__ == "__main__":
     print(f"Specificity: {specificity}")
 
     print(f"Geometric Mean: {geometric_mean}")
+
+

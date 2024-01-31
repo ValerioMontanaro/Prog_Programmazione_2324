@@ -1,12 +1,8 @@
 # Funzione: test delle classi concrete di validation
-import numpy as np
-import pandas as pd
 from knn import KNN
 from splitterFactory import SplitterFactory
-from reader import Reader
 from filler import Filler
 from standardizer import Standardizer
-from partitioner import Partitioner
 from readerFactory import ReaderFactory
 
 factory = ReaderFactory()
@@ -19,9 +15,21 @@ df_test = standardizer.standardize(df)
 
 print(df_test)
 
+# Presentazione all'utente delle opzioni di split e richiesta di una scelta numerica
+print("Scegli il metodo di split desiderato:")
+print("1: Holdout")
+print("2: Stratified Cross Validation")
+method_choice = input("Inserisci il numero del metodo di split (1 o 2): ").strip()
+
+# Associa la scelta numerica all'opzione di split corrispondente
+if method_choice == "1":
+    method_input = "holdout"
+elif method_choice == "2":
+    method_input = "stratified cross validation"
+else:
+    raise ValueError("Scelta non valida. Inserisci '1' per Holdout o '2' per Stratified Cross Validation.")
+
 # Utilizzo del metodo di split istanziato dal factory in base alla scelta dell'utente
-method_input = input(
-    "Inserisci il metodo di split desiderato.\nScegli tra 'holdout' e 'stratified cross validation': ").strip().lower()
 splitter = SplitterFactory.create_splitter(method_input)
 
 folds = None
@@ -30,11 +38,8 @@ if method_input == "holdout":
     # Chiedere all'utente la dimensione del test set come stringa (ad esempio, "20%")
     test_size_str = input("Inserisci la dimensione del test set (ad esempio, 20%): ")
 
-    # Rimuovere il simbolo '%' e convertire in float
-    if test_size_str.endswith('%'):
-        test_size_str = test_size_str[:-1]
-    else:
-        raise ValueError("La dimensione del test set deve essere seguita dal simbolo '%'")
+    # Rimuovere il simbolo '%' se presente e convertire in float
+    test_size_str = test_size_str.replace('%', '')
 
     try:
         test_size_percentage = float(test_size_str)
@@ -65,9 +70,6 @@ elif method_input == "stratified cross validation":
         raise ValueError("Il numero di esperimenti K deve essere almeno 2")
 
     folds = splitter.split(df_test, n_folds=n_folds)
-
-
-print(len(folds))
 
 # a prescindere dal metodo di split scelto, folds è una LISTA che contiene TUPLE di 2 DATAFRAME (train e test)
 # se il metodo è holdout avrò un solo 'folds' che conterrà una tupla di 2 dataframe (train e test)
@@ -100,4 +102,3 @@ for i in range(len(folds)):
     # Visualizza le differenze
     print("Righe con predizioni differenti:")
     print(different_rows)
-

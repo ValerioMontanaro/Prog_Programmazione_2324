@@ -3,24 +3,28 @@ import pandas as pd
 
 from validation import Validation
 
-
-# Questa è la classe concreta che estende la classe astratta Validation
-# e implementa il metodo split per la validazione del dataset mediante stratified cross validation
+"""
+Questa è la classe concreta che estende la classe astratta Validation
+e implementa il metodo split per la validazione del dataset mediante stratified cross validation
+"""
 
 
 class StratifiedCrossValidation(Validation):
 
     def __init__(self, n_folds):
+        """
+        Costruttore della classe StratifiedCrossValidation che inizializza il parametro n_folds della classe
+        :param n_folds: numero di folds
+        """
+
         self.n_folds = n_folds
 
-    # Questo metodo implementa la validazione del dataset mediante stratified cross validation
-    # input:
-    # -df: il DataFrame che deve essere diviso in set di training e testing.
-    # -n_folds: il numero di folds. Di default è 5.
-    # output:
-    # -folds: una lista contenente le n_folds tuple, ognuna delle quali contiene il set di training e il set di test.
-
     def split(self, df):
+        """
+        Il metodo split esegue la stratified cross validation sul dataset
+        :param df: dataframe da dividere in set di training e test
+        :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test
+        """
 
         # Aggiunta della colonna 'fold' inizializzata a NaN
         df["fold"] = np.nan

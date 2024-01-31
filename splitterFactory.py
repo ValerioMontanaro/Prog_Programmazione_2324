@@ -9,12 +9,12 @@ class SplitterFactory:
     # input: -il nome del metodo di split
     # output: -un'istanza della corretta classe concreta che estende la classe astratta Validation
     @staticmethod
-    def create_splitter(method):
+    def create_splitter(method, **kwargs):
         # Verifica che il metodo sia uno dei metodi supportati
         if method not in ["holdout", "stratified cross validation"]:
             raise ValueError("Metodo non supportato. Scegli tra 'holdout' e 'stratified cross validation'")
 
         if method == "holdout":
-            return Holdout()
+            return Holdout(**kwargs)
         elif method == "stratified cross validation":
-            return StratifiedCrossValidation()
+            return StratifiedCrossValidation(**kwargs)

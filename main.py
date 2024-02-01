@@ -19,35 +19,47 @@ print(df_test)
 print("Scegli il metodo di split desiderato:")
 print("1: Holdout")
 print("2: Stratified Cross Validation")
-method_choice = input("Inserisci il numero del metodo di split (1 o 2): ").strip()
+while True:
+    method_choice = input("Inserisci il numero del metodo di split (1 o 2): ").strip()
 
-kwargs = {}
-if method_choice == "1":
-    method_input = "holdout"
-    test_size_str = input("Inserisci la dimensione del test set (ad esempio, 20%): ")
-    test_size_str = test_size_str.replace('%', '')
-    try:
-        test_size_percentage = float(test_size_str)
-    except ValueError:
-        raise ValueError("Devi inserire un numero valido")
-    if not 0 <= test_size_percentage <= 100:
-        raise ValueError("La dimensione del test set deve essere un numero tra 0 e 100")
-    kwargs['test_size'] = test_size_percentage / 100
-    kwargs['random_state'] = 42  # Si potrebbe anche chiedere all'utente il random_state se necessario
+    if method_choice == "1":
+        method_input = "holdout"
 
-elif method_choice == "2":
-    method_input = "stratified cross validation"
-    n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5): ")
-    try:
-        n_folds = int(n_folds_str)
-    except ValueError:
-        raise ValueError("Devi inserire un numero intero valido")
-    if n_folds < 2:
-        raise ValueError("Il numero di esperimenti K deve essere almeno 2")
-    kwargs['n_folds'] = n_folds
+        while True:
+            test_size_str = input("Inserisci la dimensione del test set (ad esempio, 20%): ")
+            test_size_str = test_size_str.replace('%', '')
+            try:
+                test_size_percentage = float(test_size_str)
+                if 0 <= test_size_percentage <= 100:
+                    break
+                else:
+                    print("La dimensione del test set deve essere un numero tra 0 e 100.")
+            except ValueError:
+                print("Devi inserire un numero valido.")
 
-else:
-    raise ValueError("Scelta non valida. Inserisci '1' per Holdout o '2' per Stratified Cross Validation.")
+        kwargs = {'test_size': test_size_percentage / 100, 'random_state': 42}
+        break
+
+    elif method_choice == "2":
+        method_input = "stratified cross validation"
+
+        while True:
+            n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5): ")
+            try:
+                n_folds = int(n_folds_str)
+                if n_folds >= 2:
+                    break
+                else:
+                    print("Il numero di esperimenti K deve essere almeno 2.")
+            except ValueError:
+                print("Devi inserire un numero intero valido.")
+
+        kwargs = {'n_folds': n_folds}
+        break
+
+    else:
+        print("Scelta non valida. Inserisci '1' per Holdout o '2' per Stratified Cross Validation.")
+
 
 # Utilizzo del metodo di split istanziato dal factory in base alla scelta dell'utente
 splitter = SplitterFactory.create_splitter(method_input, **kwargs)

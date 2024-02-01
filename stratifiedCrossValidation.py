@@ -41,19 +41,17 @@ class StratifiedCrossValidation(Validation):
                           range(self.n_folds)]  # Calcolo dimensione di ogni fold
             for i in range(len(class_indices) % self.n_folds):  # Per ogni elemento rimasto
                 fold_sizes[i] += 1  # Aggiunta degli elementi rimasti in più ai primi fold
-            print(fold_sizes)
+            print(f'Nella classe con valore ({label}) i fold hanno le seguenti dimensioni {fold_sizes}')
 
             # Assegnazione degli indici ai folds
             current = 0
             for i in range(self.n_folds):
                 start, stop = current, current + fold_sizes[i]  # Indici di inizio e fine del fold
-                print(start, stop)
-                print(class_indices[start:stop])
                 df.loc[class_indices[start:stop], "fold"] = i  # Assegnazione del fold alle righe della classe
                 current = stop  # Aggiornamento indice di partenza del prossimo fold
 
         conteggio_folds = df['fold'].value_counts()
-        print(conteggio_folds)
+        print(f'Si elencano i fold creati e il numero di elementi totali presenti in ciascuno {conteggio_folds}')
 
         # Creazione dei set di training e test per ciascun fold
         for i in range(self.n_folds):

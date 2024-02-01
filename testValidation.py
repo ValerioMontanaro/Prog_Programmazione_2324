@@ -67,7 +67,8 @@ for j, (train, test) in enumerate(folds):
 # se il metodo è holdout avrò un solo 'folds' che conterrà una tupla di 2 dataframe (train e test)
 # se il metodo è stratified cross validation avrò tanti 'folds' quanti sono i folds e ogni 'folds' conterrà una tupla di
 # 2 dataframe (train e test)
-lab = []
+
+risultati = []  # Creare una lista vuota per conservare le tuple di dataframe (df_predict, df_test_adj) di ogni fold
 for i in range(len(folds)):
     df_test_train = folds[i][0]
     df_test_test = folds[i][1]
@@ -82,16 +83,7 @@ for i in range(len(folds)):
     print(f"Dataframe predizione n.{i}: \n {df_predict}")
     print(f"Dataframe adj n.{i}: \n {df_test_adj}")
 
-    # Estrai l'ultima colonna da entrambi i DataFrame
-    last_column_df_predict = df_predict.iloc[:, -1]
-    last_column_df_test_adj = df_test_adj.iloc[:, -1]
+    # Salvare i dataframe df_predict e df_test_adj come una tupla nella lista risultati
+    risultati.append((df_predict, df_test_adj))
 
-    # Confronta le colonne
-    differences = last_column_df_predict != last_column_df_test_adj
-
-    # Estrai le righe dove ci sono differenze
-    different_rows = df_predict[differences]
-
-    # Visualizza le differenze
-    print("Righe con predizioni differenti:")
-    print(different_rows)
+    print("le dimensioni di risultati sono: ", len(risultati))

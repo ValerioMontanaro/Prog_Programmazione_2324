@@ -85,9 +85,19 @@ for i in range(len(folds)):
     print(f"Dataframe adj n.{i}: \n {df_test_adj}")
 
     # Salvare i dataframe df_predict e df_test_adj come una tupla nella lista risultati
-    risultati.append((df_predict, df_test_adj))
+    risultati.append((df_test_adj, df_predict))
 
     print("le dimensioni di risultati sono: ", len(risultati))
 
-metrics_visualizer = MetricsVisualizer(method_input, risultati)
-
+print("Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1: Accuracy rate\n 2: Error rate\n 3: Sensitivity\n 4: Specificity\n 5: Geometric Mean\n 6: All the above")
+while True:
+    try:
+        scelta = input("Inserisci il numero corrispondente alla metrica desiderata (un numero intero compreso tra 1 e 6): ").strip()
+        scelta_int = int(scelta)  # Converti la scelta in un intero
+        if 1 <= scelta_int <= 6:
+            metrics_visualizer = MetricsVisualizer(method_input, risultati, scelta_int)
+            break  # Esce dal ciclo se l'input è valido
+        else:
+            raise ValueError
+    except ValueError:
+        print("Input non valido")

@@ -20,27 +20,34 @@ from xlsxwriter.utility import xl_rowcol_to_cell
 
 class MetricsVisualizer:
 
-       def __init__(self, method_input, df1):
+       def __init__(self, method_input, df, scelta_num):
 
-           print("Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1) Accuracy rate\n 2) Error rate\n 3) Sensitivity\n 4) Specificity\n 5) Geometric Mean\n 6) All the above")
-           scelta = input()
+           results = []  # Inizializza una lista vuota per i risultati del calcolo delle metriche
+
+           # grazie all'uso del dizionario "metrics_dict" è possibile associare ad ogni numero inserito dall'utente la metrica corrispondente
+           self.metrics_dict = {
+               1: "Accuracy rate",
+               2: "Error rate",
+               3: "Sensitivity",
+               4: "Specificity",
+               5: "Geometric Mean",
+               6: "All the above"
+           }
+
+           scelta = self.metrics_dict[scelta_num]
+
+           for true_labels_df, prediction_df in df:
+               metrics_result = self.calculate1_metric(scelta, true_labels_df, prediction_df)
+               results.append(metrics_result)
 
            if method_input == "holdout":
-               df1 = df1[0][0]
-               df2 = df1[0][1]
 
-               metrics_result = self.calculate1_metric(scelta, df1, df2)
-               self.save_to_excel( metrics_result, scelta, df2)
+               df2 = df[0][1]
+               self.save_to_excel( results[0], scelta, df2)
 
            elif method_input == "stratified cross validation":
 
-               results = []  # Inizializza una lista vuota per i risultati
-
-               for true_labels_df, prediction_df  in df1:
-                   metrics_result = self.calculate1_metric(scelta, true_labels_df, prediction_df)
-                   results.append(metrics_result)
-
-               self.plot_metrics(results, scelta, df1)
+               self.plot_metrics(results, scelta, df)
 
        # Questa funzione riceve in input la scelta dell'utente, il df delle etichette reali e il df delle previsioni e restituisce il valore della metrica scelta
        def calculate1_metric (self, scelta, df1, df2):

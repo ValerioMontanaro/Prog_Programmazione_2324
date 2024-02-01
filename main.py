@@ -4,6 +4,7 @@ from splitterFactory import SplitterFactory
 from filler import Filler
 from standardizer import Standardizer
 from readerFactory import ReaderFactory
+from metricsVisualizer import MetricsVisualizer
 
 factory = ReaderFactory()
 reader = factory.createReader("breast_cancer.csv")
@@ -87,3 +88,6 @@ for i in range(len(folds)):
     risultati.append((df_predict, df_test_adj))
 
     print("le dimensioni di risultati sono: ", len(risultati))
+
+metrics_visualizer = MetricsVisualizer(method_input, risultati)
+

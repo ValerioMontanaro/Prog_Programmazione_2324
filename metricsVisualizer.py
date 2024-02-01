@@ -20,12 +20,14 @@ from xlsxwriter.utility import xl_rowcol_to_cell
 
 class MetricsVisualizer:
 
-       def __init__(self, method_input, df1, df2=None):
+       def __init__(self, method_input, df1):
 
            print("Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1) Accuracy rate\n 2) Error rate\n 3) Sensitivity\n 4) Specificity\n 5) Geometric Mean\n 6) All the above")
            scelta = input()
 
            if method_input == "holdout":
+               df1 = df1[0][0]
+               df2 = df1[0][1]
 
                metrics_result = self.calculate1_metric(scelta, df1, df2)
                self.save_to_excel( metrics_result, scelta, df2)

@@ -15,7 +15,11 @@ class ReaderCSV(Reader):
         # Rimuovere le righe duplicate
         df = df.drop_duplicates()
 
-        # impostare 'Sample code number' come indice
+        # Siccome i valori della series Sample code number non sono univoci, al fine di utilizzare questa series come indice
+        # è necessario modificare i valori in modo che siano univoci, assegnando ad ogni record un valore progressivo ed unico
+        df['Sample code number'] = range(1, len(df) + 1)
+
+        # impostare la colonna 'Sample code number' come indice
         df = df.set_index('Sample code number')
 
         return df

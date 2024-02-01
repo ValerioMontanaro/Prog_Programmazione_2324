@@ -28,7 +28,7 @@ class MetricsVisualizer:
            if method_input == "holdout":
 
                metrics_result = self.calculate1_metric(scelta, df1, df2)
-               self.save_to_excel("risultati.xlsx", metrics_result, scelta, df2)
+               self.save_to_excel( metrics_result, scelta, df2)
 
            elif method_input == "stratified cross validation":
 
@@ -77,7 +77,7 @@ class MetricsVisualizer:
        # Questa funzione si occupa del salvataggio dei dati su excel solo nel CASO 1 (holdout)
        # Questa funzione riceve in input il nome del file excel in cui salvare i risultati, il valore della metrica scelta precedentemente calcolata, la metrica scelta dell'utente e il df delle previsioni
        # e salva i risultati nel file excel "risulati.xlsx" in due fogli separati: "Metrics Results" e "Predictions"
-       def save_to_excel(self, filename, metrics_result, scelta, df2):
+       def save_to_excel(self, metrics_result, scelta, df2):
            # Nomi delle metriche nell'ordine in cui appaiono in metrics_result
            metric_names = ["Accuracy", "Error rate", "Sensitivity", "Specificity", "Geometric Mean"]
 
@@ -93,7 +93,7 @@ class MetricsVisualizer:
               metrics_df = pd.DataFrame({'Metric': [scelta], 'Value': [metrics_result]})
 
            # Usa pandas.ExcelWriter per scrivere in più fogli
-           with pd.ExcelWriter(filename, mode='w') as writer:
+           with pd.ExcelWriter("risultati.xlsx", mode='w') as writer:
                metrics_df.to_excel(writer, sheet_name='Metrics Results', index=False)
                df2.to_excel(writer, sheet_name='Predictions', index=True, index_label='Sample code number')
 
@@ -120,13 +120,13 @@ class MetricsVisualizer:
                plt.xlabel("Metriche")
 
            plt.savefig("box_plot.png", bbox_inches='tight')  # Salva il plot come immagine
-           self.save_to_excel_with_plots( "risultati.xlsx", "box_plot.png", df1)
+           self.save_to_excel_with_plots(  "box_plot.png", df1)
 
        # Questa funzione si occupa del salvataggio dei dati su excel solo nel CASO 2 (stratified cross validation)
        # Questa funzione riceve in input il nome del file excel in cui salvare i risultati, il nome del file contenente il plot, il df delle previsioni
        # e salva i risultati nel file excel "risulati.xlsx" in due fogli separati: "Plots" e "Prevision"
-       def save_to_excel_with_plots(self, excel_filename, plot_filename, df1):
-           with pd.ExcelWriter(excel_filename, engine='xlsxwriter') as writer:
+       def save_to_excel_with_plots(self, plot_filename, df1):
+           with pd.ExcelWriter("risultati.xlsx", engine='xlsxwriter') as writer:
                # Prima crea il foglio per il plot
                plot_sheet = writer.book.add_worksheet('Plots')
 
@@ -151,7 +151,7 @@ if __name__ == "__main__":
  # test per la visualizzzazione dei risultati nel caso dell'holdout
 
    # DataFrame con etichette reali
-   true_labels_df_test = pd.DataFrame({
+   '''true_labels_df_test = pd.DataFrame({
        'Real Label': np.random.choice([2, 4], 10)  # Etichette reali casuali (2 per benigno, 4 per maligno)
    })
 
@@ -160,12 +160,12 @@ if __name__ == "__main__":
        'Predicted Label': np.random.choice([2, 4], 10)  # Previsioni casuali (2 per benigno, 4 per maligno)
    })
 
-   metricsVisualizer = MetricsVisualizer("holdout", true_labels_df_test, predictions_df_test)
+   metricsVisualizer = MetricsVisualizer("holdout", true_labels_df_test, predictions_df_test)'''
 
  # test per la visualizzzazione dei risultati nel caso della stratified cross validation
 
    # Numero di coppie di DataFrame da generare
-   '''num_coppie = 5  # Puoi modificare questo valore a seconda del numero di set che vuoi generare
+   num_coppie = 5  # Puoi modificare questo valore a seconda del numero di set che vuoi generare
 
    df1 = []
 
@@ -183,6 +183,6 @@ if __name__ == "__main__":
        # Aggiungi la coppia al tuo array df1
        df1.append(( true_labels_df, predictions_df))
 
-   metricsVisualizer = MetricsVisualizer("stratified cross validation", df1)'''
+   metricsVisualizer = MetricsVisualizer("stratified cross validation", df1)
 
    # Ora df1 contiene coppie di DataFrame di previsioni e etichette reali

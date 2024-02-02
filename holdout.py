@@ -33,7 +33,6 @@ class Holdout(Validation):
             np.random.seed(self.random_state)  # inizializzazione del generatore di numeri casuali
 
         shuffled_indices = np.random.permutation(len(df))  # permutazione casuale degli indici del DataFrame
-        print(shuffled_indices)
         test_set_size = int(
             len(df) * self.test_size)  # arrotondamento all'intero più vicino della dimensione del test set
         test_indices = shuffled_indices[:test_set_size]  # selezione degli indici del test set

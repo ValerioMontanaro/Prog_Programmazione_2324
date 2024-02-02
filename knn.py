@@ -32,7 +32,6 @@ class KNN:
 
         # in y_train memorizzo in un numpy array i valori della colonna target del dataframe df_train
         y_train = df_train.iloc[:, -1].values
-        print(X_train.shape)
 
         return X_train, X_train_y, y_train
 
@@ -60,7 +59,6 @@ class KNN:
         # in questo modo memorizzo in X_test sotto forma di numpy array i valori del dataframe df_test.
         # gli tolgo l'ultima colonna perchè è la colonna target e la prima colonna perchè è il sample number id
         X_test = df_test.iloc[:, 1:-1].values
-        print(X_test.shape)
 
         # per far si che il calcolo sia coerente il numero di colonne dei due numpy array deve essere uguale
         if X_train.shape[1] != X_test.shape[1]:

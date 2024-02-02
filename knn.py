@@ -128,7 +128,10 @@ class KNN:
         df_predict.columns = ['Prediction']
         df_test_adj.columns = ['Real Class']
 
+        # per una questione di ordine e coerenza la colonna delle predizioni in df_predict sarà composta da interi
+        df_predict['Prediction'] = df_predict['Prediction'].astype(int)
+
         # NBB nello stratified cross validation avrò tanti dataframe in uscita quanti fold ho fatto (*2 perchè ho
         # sia il dataframe con le classi reali che quello con le classi predette)
-
+        print(df_predict)
         return df_predict, df_test_adj

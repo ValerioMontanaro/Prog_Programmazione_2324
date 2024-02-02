@@ -87,7 +87,7 @@ for i in range(len(folds)):
     df_test_train = folds[i][0]
     df_test_test = folds[i][1]
 
-    classifier = KNN(k=5)
+    classifier = KNN(k)
     X_train, X_train_y, y_train = classifier.train(df_test_train)
     df_predict, df_test_adj = classifier.test(df_test_test, X_train, X_train_y, y_train)
 

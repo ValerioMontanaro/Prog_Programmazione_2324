@@ -58,17 +58,28 @@ Per eseguire il codice di questo progetto, seguire questi passi:
      - `Sensitivity`: Capacità del modello di identificare correttamente i casi positivi.
      - `Specificity`: Capacità del modello di identificare correttamente i casi negativi.
      - `Geometric Mean`: Misura l'equilibrio tra Sensitivity e Specificity.
-     - È possibile scegliere una o più di queste metriche per valutare il modello.
+     - `All the above` : Tutte le precedenti.
 
-4. **Esecuzione del Programma**: Eseguire il programma specificando le opzioni di input come argomenti della linea di comando quando richieste.
+4. **Esecuzione del Programma**: Eseguire il file "main.py" specificando le opzioni di input come argomenti della linea di comando quando e come richieste.
 
 ## Visualizzazione ed Interpretazione dei Risultati
-I risultati possono essere visualizzati in due modi principali:
+I risultati possono essere visualizzati all'interno del file "risultati.xlsx" che viene generato automaticamente in due modi principali a seconda dei due diversi casi:
 
-1. **File di Output**: Dopo l'esecuzione del programma, le prestazioni del modello saranno salvate in un file (ad esempio, un file Excel) che può essere consultato per un'analisi dettagliata.
+-**CASO 1**: In questo caso l'utente ha scelto l'holdout come modalità di test del modello. Il file "risultati.xlsx" conterrà i seguenti fogli: 
+"Metrics Results" in cui è presente un tabella a due colonne che asscocia ad ogni metrica il suo valore corrispondente,
+"Prevision" in cui è presente una tabella a due colonne che associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
 
-2. **Grafici e Plot**: Utilizzare grafici per visualizzare le prestazioni del modello. Ad esempio, grafici che mostrano l'Accuracy Rate o la Sensitivity in base a diversi valori di `k` o configurazioni di split del dataset.
+-**CASO 2**: In questo caso l'utente ha scelto lo Stratified Cross Validation come modalità di test del modello. Il file "risultati.xlsx" conterrà i seguenti fogli: 
+"Plots" in cui è presente un grafico che riporta un box plot per rappresentare la distribuzioni di valori di ogni metrica che si vuole visualizzare,
+"Prevision" in cui sono presenti tante tabelle quanti sono gli esperimenti, ogni tabella associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
 
 Per interpretare i risultati:
 - Confrontare le diverse metriche di performance per comprendere l'efficacia del classificatore.
 - Analizzare l'impatto delle diverse configurazioni di split del dataset e del numero di vicini `k` sulle prestazioni del modello.
+
+## Osservazioni importanti 
+I valori della colonna "Sample code number" del dataset di partenza (Breast Cancer Wisconsin (Original)) non permettono di identificare in maniera univoca ogni campione di tumore, poichè vi sono campioni diversi con "Sample code number" uguali.
+Al fine di utilizzare quest'ultima colonna come indice del dataframe corrispondente al dataset, è stato necessario modificarne i valori in modo da renderli univoci,
+sostituendo tutti i valori con degli indici interi progressivi che partono da 1 e arrivano al numero di campioni presenti nel dataset.
+
+

@@ -14,6 +14,17 @@ df = filler.fill(df)
 standardizer = Standardizer()
 df_test = standardizer.standardize(df)
 
+# Presentazione all'utente della scelta del numero di vicini da considerare per l'algoritmo del KNN
+while True:
+    k = input("Inserisci k (intero positivo), che indica il numero di vicini nel KNN : ").strip()
+    try:
+        k = int(k)
+        if k > 0:
+            break
+        else:
+            print("Il numero di vicini deve essere un numero intero strettamente positivo.")
+    except ValueError:
+        print("Devi inserire un numero intero valido.")
 
 # Presentazione all'utente delle opzioni di split e richiesta di una scelta numerica
 print("Scegli il metodo di split desiderato:")
@@ -60,7 +71,6 @@ while True:
     else:
         print("Scelta non valida. Inserisci '1' per Holdout o '2' per Stratified Cross Validation.")
 
-
 # Utilizzo del metodo di split istanziato dal factory in base alla scelta dell'utente
 splitter = SplitterFactory.create_splitter(method_input, **kwargs)
 
@@ -84,10 +94,12 @@ for i in range(len(folds)):
     # Salvare i dataframe df_predict e df_test_adj come una tupla nella lista risultati
     risultati.append((df_test_adj, df_predict))
 
-print("Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1: Accuracy rate\n 2: Error rate\n 3: Sensitivity\n 4: Specificity\n 5: Geometric Mean\n 6: All the above")
+print(
+    "Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1: Accuracy rate\n 2: Error rate\n 3: Sensitivity\n 4: Specificity\n 5: Geometric Mean\n 6: All the above")
 while True:
     try:
-        scelta = input("Inserisci il numero corrispondente alla metrica desiderata (un numero intero compreso tra 1 e 6): ").strip()
+        scelta = input(
+            "Inserisci il numero corrispondente alla metrica desiderata (un numero intero compreso tra 1 e 6): ").strip()
         scelta_int = int(scelta)  # Converti la scelta in un intero
         if 1 <= scelta_int <= 6:
             metrics_visualizer = MetricsVisualizer(method_input, risultati, scelta_int)

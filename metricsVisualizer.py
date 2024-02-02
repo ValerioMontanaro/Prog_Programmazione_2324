@@ -96,9 +96,6 @@ class MetricsVisualizer:
                geometric_mean = metrics.geometric_mean()
                return accuracy, error_rate, sensitivity, specificity, geometric_mean
 
-
-       # Questa funzione riceve in input il ,  e il
-       # e salva i risultati nel
        def save_to_excel(self, results, scelta, df2):
            """
            Questa funzione si occupa del salvataggio dei dati nel file excel "risulati.xlsx" in due fogli separati: "Metrics Results" e "Prevision" solo nel CASO 1 (holdout)
@@ -162,8 +159,6 @@ class MetricsVisualizer:
            self.save_to_excel_with_plots(  "box_plot.png", df)
 
 
-       # Questa funzione riceve in input il nome del file contenente il plot, il df delle previsioni
-       # e salva i risultati nel file excel "risulati.xlsx" in due fogli separati: "Plots" e "Prevision"
        def save_to_excel_with_plots(self, plot_filename, df):
            """
            Questa funzione si occupa del salvataggio dei dati su excelsolo nel CASO 2 (stratified cross validation) nel file "risultati.xlsx"

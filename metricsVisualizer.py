@@ -128,6 +128,9 @@ class MetricsVisualizer:
                plt.ylabel(scelta)
                plt.xlabel("Metriche")
 
+           # posiziono le ticks sull'asse y ogni 0.1 (da 0 a 1)
+           plt.yticks(ticks=[i / 10.0 for i in range(0, 11)], labels=["{:.1f}".format(i / 10.0) for i in range(0, 11)])
+
            plt.savefig("box_plot.png", bbox_inches='tight')  # Salva il plot come immagine
            self.save_to_excel_with_plots(  "box_plot.png", df)
 

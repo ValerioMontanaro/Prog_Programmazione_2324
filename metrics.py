@@ -1,27 +1,33 @@
 import pandas as pd
 import numpy as np
 
-
-# La classe "Metrics" ha il compito di calcolare le metriche di valutazione della classificazione
-
+"""
+La classe "Metrics" ha il compito di calcolare le metriche di valutazione della classificazione
+"""
 
 class Metrics:
 
-    # Il metodo "get_metrics" riceve in input due dataframe da due colonne ciascuno: "true_labels_df" e "predictions_df"
-    # - Il primo df contiene gli id identificativi dei tumori (come indice) e la loro classe reale  (come series)
-    # - Il secondo df contiene gli id identificativi dei tumori (come indice) e la loro classe predetta (benigno o maligno)
-    # Il metodo inizializza :
-    # - Un nuovo dataframe "data" (una variabile di classe) che contiene gli id identificativi dei tumori (come indice), la loro classe reale e la loro classe predetta (come series)
-    # - Un nuovo dataframe "conf_matrix" (una variabile di classe) che contiene la matrice di confusione
+
     def get_metrics(self, true_labels_df, predictions_df):
+        """
+        :param true_labels_df: df che contiene gli id identificativi dei tumori (come indice) e la loro classe reale  (come series)
+        :param predictions_df: df che contiene gli id identificativi dei tumori (come indice) e la loro classe predetta (benigno o maligno)
+        Il metodo inizializza :
+        - Un nuovo dataframe "data" (una variabile di classe) che contiene gli id identificativi dei tumori (come indice), la loro classe reale e la loro classe predetta (come series)
+        - Un nuovo dataframe "conf_matrix" (una variabile di classe) che contiene la matrice di confusione
+        """
+
         # Unisci i DataFrame sulla base dell'ID del tumore
         self.data = pd.merge(true_labels_df, predictions_df, left_index=True, right_index=True)
         self.true_labels = self.data.iloc[:, 0]  # Selezione della prima colonna
         self.predicted_labels = self.data.iloc[:, 1]  # Selezione della seconda colonna
         self.conf_matrix = self._confusion_matrix()
 
-    # Il metodo restituisce la matrice di confusione
     def _confusion_matrix(self):
+        """
+        :return conf_matrix: la matrice di confusione
+        """
+
         expected_labels = [2, 4]     # Le etichette che ti aspetti
 
         conf_matrix = pd.crosstab(
@@ -39,32 +45,47 @@ class Metrics:
         conf_matrix = conf_matrix.reindex(index=expected_labels, columns=expected_labels, fill_value=0)
         return conf_matrix
 
-    # Il metodo restituisce l'accuracy rate
     def accuracy(self):
+        """
+        :return: accuracy rate
+        """
+
         return np.diag(self.conf_matrix).sum() / self.conf_matrix.values.sum()
 
-    # Il metodo restituisce l'error rate
     def error_rate(self):
+        """
+        :return: error rate
+        """
+
         return 1 - self.accuracy()
 
-    # Il metodo restituisce la sensitivity (True Positive Rate)
     def sensitivity(self):
+        """
+        :return: sensitivity
+        """
+
         TP = self.conf_matrix[4][
             4]  # numero di casi in cui è stato predetto un tumore maligno quando il tumore è maligno
         FN = self.conf_matrix[2][
             4]  # numero di casi in cui è stato predetto un tumore benigno quando il tumore è maligno
         return TP / (TP + FN)
 
-    # Il metodo restituisce la specificity (True Negative Rate)
     def specificity(self):
+        """
+        :return: specificity
+        """
+
         TN = self.conf_matrix[2][
             2]  # numero di casi in cui è stato predetto un tumore benigno quando il tumore è benigno
         FP = self.conf_matrix[4][
             2]  # numero di casi in cui è stato predetto un tumore maligno quando il tumore è benigno
         return TN / (TN + FP)
 
-    # Il metodo restituisce la geometric mean (radice quadrata del prodotto di sensitivity e specificity)
     def geometric_mean(self):
+        """
+        :return: geometric mean
+        """
+
         return np.sqrt(self.sensitivity() * self.specificity())
 
 

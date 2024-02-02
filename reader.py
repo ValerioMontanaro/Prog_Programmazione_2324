@@ -1,11 +1,20 @@
 from abc import ABC, abstractmethod
 
-# classe astratta "Reader" definisce l'interfaccia che ogni classe concreta reader deve ereditare
+import pandas as pd
+
+"""
+classe astratta "Reader" definisce l'interfaccia che ogni classe concreta reader deve ereditare
+"""
+
+
 class Reader(ABC):
 
-    # metodo astratto "parse" definisce la firma di un metodo che essere implementato concretamente
-    # il quale riceve in input un file di tipo generico
-    # e restituisce un dataframe in output
     @abstractmethod
-    def parse(self, filename):
+    def parse(self, filename) -> pd.DataFrame:
+        """
+        metodo astratto "parse" definisce la firma di un metodo che essere implementato concretamente
+        :param filename: input un file di tipo generico
+        :return: dataframe in output
+        """
+
         pass

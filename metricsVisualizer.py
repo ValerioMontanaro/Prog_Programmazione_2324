@@ -85,7 +85,7 @@ class MetricsVisualizer:
 
        # Questa funzione si occupa del salvataggio dei dati su excel solo nel CASO 1 (holdout)
        # Questa funzione riceve in input il valore della metrica scelta precedentemente calcolata, la metrica scelta dell'utente e il df delle previsioni
-       # e salva i risultati nel file excel "risulati.xlsx" in due fogli separati: "Metrics Results" e "Predictions"
+       # e salva i risultati nel file excel "risulati.xlsx" in due fogli separati: "Metrics Results" e "Prevision"
        def save_to_excel(self, metrics_result, scelta, df2):
            # Nomi delle metriche nell'ordine in cui appaiono in metrics_result
            metric_names = ["Accuracy", "Error rate", "Sensitivity", "Specificity", "Geometric Mean"]
@@ -104,7 +104,7 @@ class MetricsVisualizer:
            # Usa pandas.ExcelWriter per scrivere in più fogli
            with pd.ExcelWriter("risultati.xlsx", mode='w') as writer:
                metrics_df.to_excel(writer, sheet_name='Metrics Results', index=False)
-               df2.to_excel(writer, sheet_name='Predictions', index=True, index_label='Sample code number')
+               df2.to_excel(writer, sheet_name='Prevision', index=True, index_label='Sample code number')
 
        # Questa funzione si occupa del salvataggio dei dati su excel solo nel CASO 2 (stratified cross validation)
        # Questa funzione riceve in input un array in cui ogni elemento corrisponde alle metriche calcolate per ogni esperimento, la scelta dell'utente riguardo alle metriche da voler visualizzare

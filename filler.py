@@ -4,6 +4,7 @@ import numpy as np
 """
 la classe "Filler" ha il compito di riempire i valori mancanti di un dataframe
 """
+
 class Filler:
 
     def fill(self, df):
@@ -20,6 +21,7 @@ class Filler:
         return df
 
 if __name__ == "__main__":
+
     # Creazione di un DataFrame di esempio con valori mancanti
     df_test = pd.DataFrame({
         'A': [1, 2, np.nan, 5, 5, 6, 2],

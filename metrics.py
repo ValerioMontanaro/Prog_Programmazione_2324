@@ -22,8 +22,22 @@ class Metrics:
 
     # Il metodo restituisce la matrice di confusione
     def _confusion_matrix(self):
-        return pd.crosstab(self.true_labels, self.predicted_labels, rownames=['Actual'], colnames=['Predicted'],
-                           dropna=True)  # il nome delle righe è "Actual", il nome delle colonne è "Predicted"
+        expected_labels = [2, 4]     # Le etichette che ti aspetti
+
+        conf_matrix = pd.crosstab(
+            self.true_labels,
+            self.predicted_labels,
+            rownames=['Actual'],
+            colnames=['Predicted'],
+            dropna=False             # Non rimuovere le righe o le colonne con valori mancanti
+        )
+
+        # Riordina e riempi i valori mancanti con 0 per garantire coerenza
+        # sostanzialmente se nell'esperimento mancava uno dei 4 casi della matrice di confusione, questo viene aggiunto e vengono aggiunti anche
+        # gli indici corrispondenti. Questo permette di avere una forma standard della matrice di confusione a prescindere dal set di dati preso in considerazione.
+        # Sto quindi forzando la matrice ad avere index 2 e 4 e colonne 2 e 4 e a riempire i valori mancanti con 0 al fine di poter calcolare le metriche in ogni caso
+        conf_matrix = conf_matrix.reindex(index=expected_labels, columns=expected_labels, fill_value=0)
+        return conf_matrix
 
     # Il metodo restituisce l'accuracy rate
     def accuracy(self):

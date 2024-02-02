@@ -50,7 +50,7 @@ Per eseguire il codice di questo progetto, seguire questi passi:
   
    - **Modalità di Valutazione**: Scegliere tra le seguenti opzioni:
      - `Holdout`: Questa modalità divide il dataset randomicamente in due parti: una per l'addestramento e una per il test. È necessario specificare la percentuale di dati per il set di test nella forma `X%` (`X` è un numero da 0 a 100).
-     - `Stratified Cross Validation`: In questa modalità, le classi benigno (2) e maligno (4) vengono suddivise ognuna in `K` parti uguali. In ciascuna classe, ogni parte viene utilizzata una volta come set di test mentre le restanti come set di addestramento. Questo metodo assicura che ogni esperimento sia eseguito su diversi sottoinsiemi di dati, fornendo una valutazione più robusta del modello.
+     - `Stratified Cross Validation`: In questa modalità, le classi benigno (2) e maligno (4) vengono suddivise ognuna in `K` parti uguali. In ciascuna classe, ogni parte viene utilizzata una volta come set di test mentre le restanti come set di addestramento. Questo metodo assicura che ogni esperimento sia eseguito su diversi sottoinsiemi di dati, fornendo una valutazione più robusta del modello. È necessario specificare il numero di parti `K` da utilizzare per la Stratified Cross Validation (K è un numero da 2 a 236, assicurando di avere così nel test set sempre un campione di ognuna delle due classi). 
 
    - **Metriche di Valutazione**: Queste opzioni determinano come valutare le prestazioni del modello. Sono disponibili le seguenti metriche:
      - `Accuracy Rate`: Percentuale di predizioni corrette rispetto al totale.

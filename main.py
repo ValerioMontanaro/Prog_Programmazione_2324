@@ -1,4 +1,5 @@
 # Funzione: test delle classi concrete di validation
+import os
 from knn import KNN
 from splitterFactory import SplitterFactory
 from filler import Filler
@@ -6,9 +7,25 @@ from standardizer import Standardizer
 from readerFactory import ReaderFactory
 from metricsVisualizer import MetricsVisualizer
 
+
+# Imposto un nome di file di default
+default_file_name = "breast_cancer.csv"
+
+# Chiedo all'utente di inserire il path del file o di premere invio per usare quello di default
+user_input = input("Inserisci il path del file csv di input o premi INVIO per usare quello di default (" + default_file_name + "): ")
+
+# Uso il file di default se l'utente preme invio senza inserire un path; altrimenti usa il path fornito
+file_name = user_input.strip() if user_input.strip() else default_file_name
+
+# Verifico se il file esiste; se non esiste, uso il file di default
+if not os.path.isfile(file_name):
+    print(f"File non trovato: {file_name}. Utilizzo del file di default: {default_file_name}")
+    file_name = default_file_name
+
+
 factory = ReaderFactory()
-reader = factory.createReader("breast_cancer.csv")
-df = reader.parse("breast_cancer.csv")
+reader = factory.createReader(file_name)
+df = reader.parse(file_name)
 filler = Filler()
 df = filler.fill(df)
 standardizer = Standardizer()

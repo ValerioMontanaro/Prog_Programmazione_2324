@@ -45,6 +45,8 @@ Per eseguire il codice di questo progetto, seguire questi passi:
 
 3. **Configurazione delle Opzioni di Input**:
     Il programma offre diverse opzioni di input per personalizzare l'esecuzione e l'analisi:
+   
+   - **File di input**: È possibile specificare il path di un file CSV di input contenente il dataset. Nel caso in cui non venisse specificato alcun file oppure che il path specificato non sia valido, il programma utilizzerà il file `breast_cancer.csv` incluso nel repository (ovvero il file di default).
 
    - **Numero di vicini (`k`) da utilizzare nel classificatore k-NN**: Questo parametro influenza il modo in cui il modello classifica i nuovi dati basandosi sui dati di addestramento. Un valore più alto di `k` può ridurre il rumore ma aumenta il rischio di perdere dettagli importanti.
   

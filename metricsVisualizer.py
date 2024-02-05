@@ -113,7 +113,7 @@ class MetricsVisualizer:
                # Mappa i nomi delle metriche ai loro valori
                metrics_df = pd.DataFrame({
                    'Metric': metric_names,
-                   'Value': list(metrics_result)
+                   'Value': list(results)
                })
            else:
               # Altrimenti, crea un DataFrame con una singola metrica e il suo valore

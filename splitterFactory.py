@@ -8,7 +8,7 @@ Questa classe ha il compito di istanziare la giusta classe (estensione di valida
 
 class SplitterFactory:
     @staticmethod
-    def create_splitter(method: str, **kwargs) -> object:
+    def create_splitter(method: str, **kwargs):
         """
         Questo metodo statico analizza il nome del metodo di split scelto dall'utente e in base a questo crea l'oggetto splitter corretto
         :param method: il nome del metodo di split

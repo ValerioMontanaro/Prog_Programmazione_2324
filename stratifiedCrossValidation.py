@@ -11,13 +11,14 @@ e implementa il metodo split per la validazione del dataset mediante stratified 
 
 class StratifiedCrossValidation(Validation):
 
-    def __init__(self, n_folds):
+    def __init__(self, n_folds, random_state=None):
         """
         Costruttore della classe StratifiedCrossValidation che inizializza il parametro n_folds della classe
         :param n_folds: numero di folds
         """
 
         self.n_folds = n_folds
+        self.random_state = random_state
 
     def split(self, df):
         """
@@ -25,6 +26,9 @@ class StratifiedCrossValidation(Validation):
         :param df: dataframe da dividere in set di training e test
         :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test
         """
+
+        # Permutazione casuale delle righe del DataFrame
+        df = df.sample(frac=1, random_state=self.random_state)
 
         # Aggiunta della colonna 'fold' inizializzata a NaN
         df["fold"] = np.nan

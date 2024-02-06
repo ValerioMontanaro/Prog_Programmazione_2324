@@ -34,7 +34,7 @@ class Holdout(Validation):
 
         shuffled_indices = np.random.permutation(len(df))  # permutazione casuale degli indici del DataFrame
         test_set_size = int(
-            len(df) * self.test_size)  # arrotondamento all'intero più vicino della dimensione del test set
+            len(df) * self.test_size)  # arrotondamento per difetto all'intero più vicino della dimensione del test set
         test_indices = shuffled_indices[:test_set_size]  # selezione degli indici del test set
         train_indices = shuffled_indices[test_set_size:]  # selezione degli indici del training set
 

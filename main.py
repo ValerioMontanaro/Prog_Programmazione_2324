@@ -82,7 +82,7 @@ while True:
             except ValueError:
                 print("Devi inserire un numero intero valido.")
 
-        kwargs = {'n_folds': n_folds}
+        kwargs = {'n_folds': n_folds, 'random_state': 42}
         break
 
     else:

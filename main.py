@@ -1,4 +1,4 @@
-# Funzione: test delle classi concrete di validation
+# Funzione: Eseguire il programma principale per la validazione del dataset mediante KNN e visualizzazione delle metriche di valutazione del modello di classificazione binaria
 import os
 from knn import KNN
 from splitterFactory import SplitterFactory

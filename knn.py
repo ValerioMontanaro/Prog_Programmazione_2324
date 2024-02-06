@@ -131,5 +131,4 @@ class KNN:
 
         # NBB nello stratified cross validation avrò tanti dataframe in uscita quanti fold ho fatto (*2 perchè ho
         # sia il dataframe con le classi reali che quello con le classi predette)
-        print(df_predict)
         return df_predict, df_test_adj

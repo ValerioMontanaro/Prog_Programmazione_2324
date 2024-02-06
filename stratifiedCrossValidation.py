@@ -50,13 +50,9 @@ class StratifiedCrossValidation(Validation):
                 df.loc[class_indices[start:stop], "fold"] = i  # Assegnazione del fold alle righe della classe
                 current = stop  # Aggiornamento indice di partenza del prossimo fold
 
-        conteggio_folds = df['fold'].value_counts()
-        print(f'Si elencano i fold creati e il numero di elementi totali presenti in ciascuno {conteggio_folds}')
-
         # Creazione dei set di training e test per ciascun fold
         for i in range(self.n_folds):
             test_set = df[df["fold"] == i].iloc[:, :-1]  # Rimuove l'ultima colonna dal test set
-            print(test_set)
             train_set = df[df["fold"] != i].iloc[:, :-1]  # Rimuove l'ultima colonna dal train set
             folds.append((train_set, test_set))
 

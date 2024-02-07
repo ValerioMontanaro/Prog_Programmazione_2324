@@ -23,7 +23,7 @@ class Holdout(Validation):
         """
         Il metodo split esegue la holdout sul dataset
         :param df: dataframe da dividere in set di training e test
-        :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test
+        :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test (in questo caso una sola tupla con il set di training e il set di test)
         """
 
         # Lista dei folds

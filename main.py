@@ -69,15 +69,15 @@ while True:
         method_input = "stratified cross validation"
 
         while True:
-            n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5) compreso tra 2 e 236: ")
+            n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5): ")
             try:
                 n_folds = int(n_folds_str)
-                if n_folds < 2 or n_folds > 236:
-                    raise ValueError
-                else:
+                if n_folds > 1:
                     break
+                else:
+                    raise ValueError
             except ValueError:
-                print("Il numero di esperimenti K deve essere un numero tra 2 e 236.")
+                print("Il numero di esperimenti K deve essere un numero intero positivo.")
 
         kwargs = {'n_folds': n_folds, 'random_state': 42}
         break

@@ -10,9 +10,9 @@ class SplitterFactory:
     @staticmethod
     def create_splitter(method: str, **kwargs):
         """
-        Questo metodo statico analizza il nome del metodo di split scelto dall'utente e in base a questo crea l'oggetto splitter corretto
+        Questo metodo statico analizza il nome del metodo di split scelto dall'utente e in base a questo crea l'oggetto splitter corretto con i parametri specificati dall'utente
         :param method: il nome del metodo di split
-        :param kwargs: i parametri del metodo di split (es. test_size e random_state per holdout o n_folds per stratified cross validation)
+        :param kwargs: i parametri del metodo di split (es. test_size e random_state per holdout o n_folds e random_state per stratified cross validation)
         :return: un'istanza della corretta classe concreta che estende la classe astratta Validation
         """
 

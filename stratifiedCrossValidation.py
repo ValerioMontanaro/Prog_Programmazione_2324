@@ -15,6 +15,7 @@ class StratifiedCrossValidation(Validation):
         """
         Costruttore della classe StratifiedCrossValidation che inizializza il parametro n_folds della classe
         :param n_folds: numero di folds
+        :param random_state: valore opzionale per inizializzare il generatore di numeri casuali, utile per ottenere risultati riproducibili
         """
 
         self.n_folds = n_folds
@@ -24,7 +25,7 @@ class StratifiedCrossValidation(Validation):
         """
         Il metodo split esegue la stratified cross validation sul dataset
         :param df: dataframe da dividere in set di training e test
-        :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test
+        :return: folds: lista di tuple, ognuna delle quali contiene il set di training e il set di test (in questo caso una tupla per ogni fold)
         """
 
         # Permutazione casuale delle righe del DataFrame

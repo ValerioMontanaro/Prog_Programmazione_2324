@@ -29,7 +29,7 @@ df = reader.parse(file_name)
 filler = Filler()
 df = filler.fill(df)
 standardizer = Standardizer()
-df_test = standardizer.standardize(df)
+df = standardizer.standardize(df)
 
 # Presentazione all'utente della scelta del numero di vicini da considerare per l'algoritmo del KNN
 while True:
@@ -92,7 +92,7 @@ while True:
 splitter = SplitterFactory.create_splitter(method_input, **kwargs)
 
 # Esegui lo split
-folds = splitter.split(df_test)
+folds = splitter.split(df)
 
 # A prescindere dal metodo di split scelto, folds è una LISTA che contiene TUPLE di 2 DATAFRAME (train e test)
 # se il metodo è holdout avrò un solo 'folds' che conterrà una tupla di 2 dataframe (train e test)
@@ -101,15 +101,15 @@ folds = splitter.split(df_test)
 
 risultati = []  # Creare una lista vuota per conservare le tuple di dataframe (df_predict, df_test_adj) di ogni fold
 for i in range(len(folds)):
-    df_test_train = folds[i][0]
-    df_test_test = folds[i][1]
+    df_train = folds[i][0]
+    df_test = folds[i][1]
 
     classifier = KNN(k)
-    X_train, X_train_y, y_train = classifier.train(df_test_train)
-    df_predict, df_test_adj = classifier.test(df_test_test, X_train, X_train_y, y_train)
+    X_train, X_train_y, y_train = classifier.train(df_train)
+    df_predict, df_adj = classifier.test(df_test, X_train, X_train_y, y_train)
 
     # Salvare i dataframe df_predict e df_test_adj come una tupla nella lista risultati
-    risultati.append((df_test_adj, df_predict))
+    risultati.append((df_adj, df_predict))
 
 print("Selezionare una delle seguenti opzioni per la visualizzazione delle metriche:\n 1: Accuracy rate\n 2: Error rate\n 3: Sensitivity\n 4: Specificity\n 5: Geometric Mean\n 6: All the above")
 

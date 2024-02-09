@@ -5,8 +5,8 @@ import numpy as np
 La classe "Metrics" ha il compito di calcolare le metriche di valutazione della classificazione
 """
 
-class Metrics:
 
+class Metrics:
 
     def get_metrics(self, true_labels_df, predictions_df):
         """
@@ -28,14 +28,14 @@ class Metrics:
         :return conf_matrix: la matrice di confusione
         """
 
-        expected_labels = [2, 4]     # Le etichette che ti aspetti
+        expected_labels = [2, 4]  # Le etichette che ti aspetti
 
         conf_matrix = pd.crosstab(
             self.true_labels,
             self.predicted_labels,
             rownames=['Actual'],
             colnames=['Predicted'],
-            dropna=False             # Non rimuovere le righe o le colonne con valori mancanti
+            dropna=False  # Non rimuovere le righe o le colonne con valori mancanti
         )
 
         # Riordina e riempi i valori mancanti con 0 per garantire coerenza
@@ -116,7 +116,6 @@ if __name__ == "__main__":
     print(true_labels_df_test)
     print(predictions_df_test)
 
-
     # Stampare i risultati
     print(f"Confusion Matrix: {metrics.conf_matrix}")
 
@@ -127,5 +126,3 @@ if __name__ == "__main__":
     print(f"Specificity: {specificity}")
 
     print(f"Geometric Mean: {geometric_mean}")
-
-

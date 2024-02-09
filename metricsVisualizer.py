@@ -64,8 +64,7 @@ class MetricsVisualizer:
            :return: accuracy or error_rate or sensitivity or specificity or geometric_mean or all the above: metriche di valutazone della classificazione
            """
 
-        metrics = Metrics()
-        metrics.get_metrics(df1, df2)
+        metrics = Metrics(df1, df2)
 
         if scelta == "Accuracy rate":
             accuracy = metrics.accuracy()

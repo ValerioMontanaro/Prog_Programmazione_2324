@@ -8,11 +8,11 @@ La classe "Metrics" ha il compito di calcolare le metriche di valutazione della 
 
 class Metrics:
 
-    def get_metrics(self, true_labels_df, predictions_df):
+    def __init__(self, true_labels_df, predictions_df):
         """
         :param true_labels_df: df che contiene gli id identificativi dei tumori (come indice) e la loro classe reale (come series)
         :param predictions_df: df che contiene gli id identificativi dei tumori (come indice) e la loro classe predetta (come series)
-        Il metodo inizializza :
+        Il metodo inizializza:
         - Un nuovo dataframe "data" (una variabile di istanza) che contiene gli id identificativi dei tumori (come indice), la loro classe reale e la loro classe predetta (come series)
         - Un nuovo dataframe "conf_matrix" (una variabile di istanza) che contiene la matrice di confusione
         """

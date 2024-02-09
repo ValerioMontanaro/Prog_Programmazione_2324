@@ -39,9 +39,9 @@ while True:
         if k > 0:
             break
         else:
-            print("Il numero di vicini deve essere un numero intero strettamente positivo.")
+            raise ValueError
     except ValueError:
-        print("Devi inserire un numero intero valido.")
+        print("Il numero di vicini deve essere un numero intero strettamente positivo.")
 
 # Presentazione all'utente delle opzioni di split e richiesta di una scelta numerica
 print("Scegli il metodo di split desiderato:")
@@ -61,9 +61,9 @@ while True:
                 if 0 <= test_size_percentage <= 100:
                     break
                 else:
-                    print("La dimensione del test set deve essere un numero tra 0 e 100.")
+                    raise ValueError
             except ValueError:
-                print("Devi inserire un numero valido.")
+                print("La dimensione del test set deve essere un numero tra 0 e 100.")
 
         kwargs = {'test_size': test_size_percentage / 100, 'random_state': 42}
         break
@@ -72,15 +72,15 @@ while True:
         method_input = "stratified cross validation"
 
         while True:
-            n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5): ")
+            n_folds_str = input("Inserisci il numero di esperimenti K (ad esempio, 5) compreso tra 2 e 236: ")
             try:
                 n_folds = int(n_folds_str)
                 if n_folds < 2 or n_folds > 236:
-                    print("Il numero di esperimenti K deve essere almeno 2 e al massimo 236.")
+                    raise ValueError
                 else:
                     break
             except ValueError:
-                print("Devi inserire un numero intero valido.")
+                print("Il numero di esperimenti K deve essere un numero tra 2 e 236.")
 
         kwargs = {'n_folds': n_folds, 'random_state': 42}
         break
@@ -124,4 +124,4 @@ while True:
         else:
             raise ValueError
     except ValueError:
-        print("Input non valido")
+        print("Il numero associato alla metrica deve essere un intero compreso tra 1 e 6.")

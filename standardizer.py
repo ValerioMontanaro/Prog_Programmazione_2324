@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 
 """
@@ -15,7 +14,7 @@ class Standardizer:
         """
 
         for col in df.columns:
-            if np.issubdtype(df[col].dtype, np.number)  and col != 'Class': #la standardizzazione dei codici identificativi del tumore non ha senso e quindi non deve esssere effetuata
+            if np.issubdtype(df[col].dtype, np.number)  and col != 'Class': #la standardizzazione della series che indica l'entità maligna o benigna del tumore non ha senso e quindi non deve esssere effetuata
                 mean_value = df[col].mean()
                 std_value = df[col].std()
                 df[col] = (df[col] - mean_value) / std_value

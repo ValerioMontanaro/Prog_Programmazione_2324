@@ -23,13 +23,10 @@ if not os.path.isfile(file_name):
     file_name = default_file_name
 
 
-factory = ReaderFactory()
-reader = factory.createReader(file_name)
+reader = ReaderFactory.create_reader(file_name)
 df = reader.parse(file_name)
-filler = Filler()
-df = filler.fill(df)
-standardizer = Standardizer()
-df = standardizer.standardize(df)
+df = Filler.fill(df)
+df = Standardizer.standardize(df)
 
 # Presentazione all'utente della scelta del numero di vicini da considerare per l'algoritmo del KNN
 while True:

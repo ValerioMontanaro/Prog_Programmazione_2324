@@ -5,23 +5,26 @@ import numpy as np
 la classe "Filler" ha il compito di riempire i valori mancanti di un dataframe
 """
 
+
 class Filler:
 
-    def fill(self, df):
+    @staticmethod
+    def fill(df):
         """
+        Metodo statico che riempie i valori mancanti di un dataframe
         :param df: un dataframe con potenziali valori mancanti
         :return df: un dataframe senza valori mancanti
         """
 
         for col in df.columns:
             if df[col].isnull().any():
-                mode_value = df[col].mode()[0] # Il metodo mode() restituisce una series, quindi selezioniamo il primo elemento, cioè il più frequente in assoluto.
+                mode_value = df[col].mode()[0]  # Il metodo mode() restituisce una series, quindi selezioniamo il primo elemento, cioè il più frequente in assoluto.
                 df[col].fillna(mode_value, inplace=True)
 
         return df
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     # Creazione di un DataFrame di esempio con valori mancanti
     df_test = pd.DataFrame({
         'A': [1, 2, np.nan, 5, 5, 6, 2],
@@ -33,8 +36,7 @@ if __name__ == "__main__":
     print(df_test)
 
     # Istanza della classe Filler e utilizzo del metodo fill
-    filler = Filler()
-    df_filled = filler.fill(df_test)
+    df_filled = Filler.fill(df_test)
 
     print("\nDataFrame dopo il riempimento dei valori mancanti:")
     print(df_filled)

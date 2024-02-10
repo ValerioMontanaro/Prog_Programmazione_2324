@@ -45,8 +45,7 @@ class StratifiedCrossValidation(Validation):
             fold_sizes = [len(class_indices) // self.n_folds for _ in
                           range(self.n_folds)]  # Calcolo dimensione di ogni fold
             for i in range(len(class_indices) % self.n_folds):  # Per ogni elemento rimasto
-                fold_sizes[i] += 1  # Aggiunta degli elementi rimasti in più ai primi fold
-            print(f'Nella classe con valore ({label}) i fold hanno le seguenti dimensioni {fold_sizes}')
+                fold_sizes[i] += 1  # Aggiunta degli elementi rimasti in più ai primi folds
 
             # Assegnazione degli indici ai folds
             current = 0

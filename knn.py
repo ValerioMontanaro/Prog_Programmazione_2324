@@ -20,7 +20,7 @@ class KNN:
         :return y_train: che contiene i valori della colonna target del dataframe di train
         """
 
-        # metto nel df_train la colonna del sample number id
+        # resetto la colonna di index del dataframe train a partire da 0 e la memorizzo in df_train come prima colonna
         df_train.reset_index(inplace=True)
 
         # in quest pezzo di codice memorizzo in X_train sotto forma di numpy array
@@ -44,16 +44,14 @@ class KNN:
         :param X_train: che contiene i valori del dataframe di train senza la colonna target
         :param X_train_y: che contiene i valori del dataframe di train compresa la colonna target e il sample number id
         :param y_train: che contiene i valori della colonna target del dataframe di train
-        :return df_predict: dataframe con 2 colonne; Prima --> Sample ID Number,  Seconda --> Classe Predetta
-        :return df_test_adj: dataframe con 2 colonne; Prima --> Sample ID Number,  Seconda --> Classe Reale
+        :return df_predict: dataframe con 1 colonna; Indice --> Sample ID Number,  Prima Col. --> Classe Predetta
+        :return df_test_adj: dataframe con 1 colonna; Indice --> Sample ID Number,  Prima Col. --> Classe Reale
         """
 
-        # exit_df avrà come numero di colonne le colonne del dataframe di test meno la colonna target ma più una colonna
-        # che conterrà l'id del punto di test che sto considerando e più un'altra che conterrà la classe predetta
         df_predict = None
         df_test_adj = df_test.iloc[:, [-1]]
 
-        # metto nel df_train la colonna del sample number id
+        # resetto la colonna di index del dataframe test a partire da 0 e la memorizzo in df_train come prima colonna
         df_test.reset_index(inplace=True)
 
         # in questo modo memorizzo in X_test sotto forma di numpy array i valori del dataframe df_test.
@@ -88,14 +86,14 @@ class KNN:
             # ora devo considerare solo le prime k colonne di sorted_dist
             k_nearest_neighbors = sorted_dist[:, :self.k]
 
-            # a questo punto quante volte c'è un valore della colonna target e quante volte c'è l'altro
+            # a questo punto conto quante volte c'è un valore della colonna target e quante volte c'è l'altro
             unique_elements, counts_elements = np.unique(k_nearest_neighbors[1], return_counts=True)
             # unique_elements contiene i valori della colonna target
             # counts_elements contiene il numero di volte che compare quel valore della colonna target
             # np.argmax(counts_elements) restituisce l'indice del valore massimo di counts_elements
             most_frequent = unique_elements[np.argmax(counts_elements)]
 
-            # ora devo aggiungere la riga a exit_df
+            # ora devo aggiungere la riga all'output df_predict
             # la riga è composta row che in ogni iterazione è il punto di X_test che sto considerando e most_frequent
             # che è la classe predetta dal modello di classificazione
             rtba = np.concatenate((row, [int(most_frequent)]))
@@ -116,7 +114,7 @@ class KNN:
 
         # Assicurati che df_predict abbia lo stesso numero di righe di sample_id_number
         if len(sample_id_number) == len(df_predict):
-            # Imposta sample_id_number come indice di df_predict
+            # Imposta sample ID come indice di df_predict riassociando il corretto sample ID  alle predizioni
             df_predict = df_predict.set_index(sample_id_number)
         else:
             print("Errore: Il numero di righe in df_test e df_predict non corrisponde.")

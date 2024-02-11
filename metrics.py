@@ -102,10 +102,9 @@ if __name__ == "__main__":
         'Predicted Label': np.random.choice([2, 4], 10)  # Previsioni casuali (2 per benigno, 4 per maligno)
     })
 
-    metrics = Metrics()
+    metrics = Metrics(true_labels_df_test, predictions_df_test)
 
     # Ottenere le varie metriche
-    metrics.get_metrics(true_labels_df_test, predictions_df_test)
     accuracy = metrics.accuracy()
     error_rate = metrics.error_rate()
     sensitivity = metrics.sensitivity()

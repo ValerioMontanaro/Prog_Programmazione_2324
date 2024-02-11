@@ -13,7 +13,7 @@ Il dataset `breast_cancer.csv` utilizzato in questo progetto è fondamentale per
 - **Numero di Caratteristiche**: 11 caratteristiche per campione.
 
 - **Nomi delle Caratteristiche**:
-  - `Sample code number`: Identificativo unico per ogni campione.
+  - `Sample code number`: Identificativo per ogni campione.
   - `Clump Thickness`: Spessore del grumo di cellule.
   - `Uniformity of Cell Size`: Uniformità delle dimensioni cellulari.
   - `Uniformity of Cell Shape`: Uniformità delle forme cellulari.

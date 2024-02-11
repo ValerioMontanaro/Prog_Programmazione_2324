@@ -148,6 +148,7 @@ class MetricsVisualizer:
             plt.title(f"Box Plot della Metrica {scelta}")
             plt.ylabel(scelta)
             plt.xlabel("Metriche")
+            plt.xticks([])  # Questo rimuoverà i tick sull'asse x
 
         # posiziono le ticks sull'asse y ogni 0.1 (da 0 a 1) per migliorare la leggibilità dei box plot
         plt.yticks(ticks=[i / 10.0 for i in range(0, 11)], labels=["{:.1f}".format(i / 10.0) for i in range(0, 11)])

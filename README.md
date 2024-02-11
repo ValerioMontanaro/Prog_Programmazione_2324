@@ -63,23 +63,23 @@ Per eseguire il codice di questo progetto, seguire questi passi:
 
 4. **Esecuzione del Programma**: Eseguire il file "main.py" specificando le opzioni di input come argomenti della linea di comando quando e come richieste.
 
-## Visualizzazione ed Interpretazione dei Risultati
+## Visualizzazione e Interpretazione dei Risultati
 I risultati possono essere visualizzati all'interno del file "risultati.xlsx" che viene generato automaticamente in due modi principali a seconda dei due diversi casi:
 
 -**CASO 1**: In questo caso l'utente ha scelto l'holdout come modalità di test del modello. Il file "risultati.xlsx" conterrà i seguenti fogli: 
-"Metrics Results" in cui è presente un tabella a due colonne che asscocia ad ogni metrica il suo valore corrispondente,
-"Prevision" in cui è presente una tabella a due colonne che associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
+"Metrics Results" in cui è presente un tabella a due colonne che associa a ogni metrica il suo valore corrispondente,
+"Prevision" in cui è presente una tabella a due colonne che associa a ogni "Sample code number" del campione di test il valore predetto dal modello.
 
 -**CASO 2**: In questo caso l'utente ha scelto lo Stratified Cross Validation come modalità di test del modello. Il file "risultati.xlsx" conterrà i seguenti fogli: 
 "Plots" in cui è presente un grafico che riporta un box plot per ogni metrica al fine di rappresentare la sua distribuzione nei vari esperimenti,
-"Prevision" in cui sono presenti tante tabelle quanti sono gli esperimenti, ogni tabella associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
+"Prevision" in cui sono presenti tante tabelle quanti sono gli esperimenti, ogni tabella associa a ogni "Sample code number" del campione di test il valore predetto dal modello.
 
 Per interpretare i risultati:
 - Confrontare le diverse metriche di performance per comprendere l'efficacia del classificatore.
 - Analizzare l'impatto delle diverse configurazioni di split del dataset e del numero di vicini `k` sulle prestazioni del modello.
 
 ## Osservazioni importanti 
-I valori della colonna "Sample code number" del dataset di partenza (Breast Cancer Wisconsin (Original)) non permettono di identificare in maniera univoca ogni campione di tumore, poichè vi sono campioni diversi con "Sample code number" uguali.
+I valori della colonna "Sample code number" del dataset di partenza (Breast Cancer Wisconsin (Original)) non permettono di identificare in maniera univoca ogni campione di tumore, poiché vi sono campioni diversi con "Sample code number" uguali.
 Al fine di utilizzare quest'ultima colonna come indice del dataframe corrispondente al dataset, è stato necessario modificarne i valori in modo da renderli univoci,
 sostituendo tutti i valori con degli indici interi progressivi che partono da 1 e arrivano al numero di campioni presenti nel dataset.
 

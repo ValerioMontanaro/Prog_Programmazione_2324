@@ -14,7 +14,7 @@ class ReaderCSV(Reader):
         implementazione concreta del metodo "parse" della classe astratta "Reader"
         leggere il relativo commento per ulteriori informazioni sul metodo astratto "parse"
         con la seguente implementazione concreta si definisce l'estensione "csv" del file di input
-        il file letto in input come datframe viene prima ripulito dalle righe duplicate,
+        il file letto in input come dataframe viene prima ripulito dalle righe duplicate,
         vengono resi univoci i valori della colonna "Sample code number" e
         successivamente viene reimpostata la colonna "Sample code number" come indice del dataframe
         :param filename: file con estensione csv

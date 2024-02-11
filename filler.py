@@ -11,7 +11,7 @@ class Filler:
     @staticmethod
     def fill(df):
         """
-        Metodo statico che riempie i valori mancanti di un dataframe
+        Metodo statico che riempie i valori mancanti di un dataframe utilizzando la moda della series corrispondente
         :param df: un dataframe con potenziali valori mancanti
         :return df: un dataframe senza valori mancanti
         """

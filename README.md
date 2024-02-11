@@ -71,7 +71,7 @@ I risultati possono essere visualizzati all'interno del file "risultati.xlsx" ch
 "Prevision" in cui è presente una tabella a due colonne che associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
 
 -**CASO 2**: In questo caso l'utente ha scelto lo Stratified Cross Validation come modalità di test del modello. Il file "risultati.xlsx" conterrà i seguenti fogli: 
-"Plots" in cui è presente un grafico che riporta un box plot per rappresentare la distribuzioni di valori di ogni metrica che si vuole visualizzare,
+"Plots" in cui è presente un grafico che riporta un box plot per ogni metrica al fine di rappresentare la sua distribuzione nei vari esperimenti,
 "Prevision" in cui sono presenti tante tabelle quanti sono gli esperimenti, ogni tabella associa ad ogni "Sample code number" del campione di test il valore predetto dal modello.
 
 Per interpretare i risultati:
